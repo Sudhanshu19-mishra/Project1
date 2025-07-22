@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class User(models.Model):
+class Product(models.Model):
     # id=models.IntegerField(max_length=50)
     product_name = models.CharField(max_length=100, null=True, blank=True)
     product_brand=models.CharField(max_length=200)

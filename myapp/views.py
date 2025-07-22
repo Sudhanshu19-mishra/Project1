@@ -3,7 +3,7 @@ from rest_framework. views import APIView
 from rest_framework .response import Response
 from rest_framework . decorators import api_view
 from . models import *
-from .serializer import Userserializer
+from .serializer import Productserializer
 from rest_framework import status
 
 
@@ -11,19 +11,19 @@ from rest_framework import status
 class UserViews(APIView):
     def get (self , request , id=None):
         if id : 
-            user_obj=User.objects.filter(id=id).first()
+            user_obj=Product.objects.filter(id=id).first()
             if user_obj:
-                serializer= Userserializer(user_obj)
+                serializer= Productserializer(user_obj)
                 return Response ({"status": "Success","data":serializer.data})
             else:
                 return Response({"error" : "User with Id  Not found"} ,status=404)
         else:
-            users=User.objects.all().order_by('-pk')
-            serializer=Userserializer(users,many=True)
+            users=Product.objects.all().order_by('-pk')
+            serializer=Productserializer(users,many=True)
             return Response({"status": "Success","data":serializer.data})
         
     def post(self, request):
-        serializer = Userserializer(data=request.data)
+        serializer = Productserializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({
@@ -37,8 +37,8 @@ class UserViews(APIView):
 
         # PATCH request
     def patch(self , request , id=None):
-        user = User.objects.get(id=id)
-        serializer = Userserializer(user, data=request.data, partial=True)
+        user = Product.objects.get(id=id)
+        serializer = Productserializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response({
@@ -52,7 +52,7 @@ class UserViews(APIView):
 
         # DELETE request
     def delete (self, request, id=None) : 
-        user = User.objects.get(id=id)
+        user = Product.objects.get(id=id)
         user.delete()
         return Response({"status": "deleted", "message": "User was deleted successfully"})
 

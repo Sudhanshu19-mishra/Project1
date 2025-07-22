@@ -1,8 +1,12 @@
 from rest_framework import serializers
-from . models import User
+from . models import Product
 
 
-class Userserializer(serializers.ModelSerializer):
-    class Meta:
-        model= User
-        fields='__all__'
+class Productserializer(serializers.Serializer):
+    product_name = serializers.CharField(required=False)
+    product_brand=serializers.CharField(required=False)
+
+    image = serializers.ImageField(required=False)
+
+    def create(self, validated_data):
+        return Product.objects.create(**validated_data)
