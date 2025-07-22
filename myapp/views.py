@@ -37,8 +37,8 @@ class UserViews(APIView):
 
         # PATCH request
     def patch(self , request , id=None):
-        student = User.objects.get(id=id)
-        serializer = Userserializer(student, data=request.data, partial=True)
+        user = User.objects.get(id=id)
+        serializer = Userserializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response({
@@ -52,7 +52,7 @@ class UserViews(APIView):
 
         # DELETE request
     def delete (self, request, id=None) : 
-        student = User.objects.get(id=id)
-        student.delete()
-        return Response({"status": "deleted", "message": "Student was deleted successfully"})
+        user = User.objects.get(id=id)
+        user.delete()
+        return Response({"status": "deleted", "message": "User was deleted successfully"})
 
